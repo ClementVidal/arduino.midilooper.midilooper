@@ -28,5 +28,11 @@ link_directories ("/home/cvidal/Dev/ArduinoLib/install/lib/static/")
 
 add_executable( ArduinoMIDI src/main.cpp )
 
+add_custom_command( TARGET ArduinoMIDI POST_BUILD COMMAND avr-objcopy -O ihex -R .eeprom ArduinoMIDI ArduinoMIDI.hex )
+
+add_custom_target( transfert COMMAND sudo avrdude -F -V -c arduino -p ATMEGA328P -P /dev/ttyACM0 -b 115200 -U flash:w:ArduinoMIDI.hex )
+
+add_custom_target( setupserial COMMAND stty -F /dev/ttyACM0 cs8 9600 ignbrk -brkint -imaxbel -opost -onlcr -isig -icanon -iexten -echo -echoe -echok -echoctl -echoke noflsh -ixon -crtscts )
+
 target_link_libraries( ArduinoMIDI ArduinoCore) 
 target_link_libraries( ArduinoMIDI m) 
