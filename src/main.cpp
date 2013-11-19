@@ -1,21 +1,21 @@
-#include <avr/io.h>
-#include <util/delay.h>
+#include <Arduino.h>
 
-#include <HardwareSerial.h> 
- 
-int main (void)
+int main( void )
 {
     
+    init();
     Serial.begin( 9600 );
+
+    pinMode( 13, OUTPUT );
 
     while(1) 
     {
-        Serial.println("Hello world!");
+        Serial.println("Hello world Bastard !!!!");
+        digitalWrite( 13, HIGH );
+        delay(1000);
 
-        PORTB |= _BV(PORTB5);
-        _delay_ms(1000);
-        PORTB &= ~_BV(PORTB5);
-        _delay_ms(1000);
+        digitalWrite( 13, LOW);
+        delay(1000);
     }
     return 0;
 }
