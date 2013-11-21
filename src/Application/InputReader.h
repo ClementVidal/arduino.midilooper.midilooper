@@ -20,27 +20,25 @@ along with ArduinoMIDILooper.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-#include <Arduino.h>
+#ifndef __APPLICATION_INPUTREADER__
+#define __APPLICATION_INPUTREADER__
 
-#include <Application/Application.h>
-
-using namespace NArduinoMIDILooper;
-
-int main( void )
+namespace NArduinoMIDILooper
 {
-    init();
-    Serial.begin( 9600 );
 
-    pinMode( 13, OUTPUT );
+class CInputReader
+{
 
-    while(1) 
-    {
-        Serial.println("Hello world Bastard !!!!");
-        digitalWrite( 13, HIGH );
-        delay(1000);
+public:
 
-        digitalWrite( 13, LOW);
-        delay(1000);
-    }
-    return 0;
+    CInputReader();
+    ~CInputReader();
+
+private:
+
+
+};
+
 }
+
+#endif
