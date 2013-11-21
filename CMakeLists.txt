@@ -22,8 +22,8 @@ set(CMAKE_C_FLAGS ${CFLAGS})
 set(CMAKE_CXX_FLAGS ${CXXFLAGS})
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
-include_directories("/home/cvidal/Dev/ArduinoLib/install/include/Arduino")
-link_directories ("/home/cvidal/Dev/ArduinoLib/install/lib/static/")
+include_directories($ENV{ARDUINO_INCLUDE})
+link_directories($ENV{ARDUINO_LIB})
 
 add_executable( ArduinoMIDILooper src/main.cpp )
 
