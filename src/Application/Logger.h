@@ -23,6 +23,8 @@ along with ArduinoMIDILooper.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef __APPLICATION_LOGGER__
 #define __APPLICATION_LOGGER__
 
+#include <stdio.h>
+
 namespace NArduinoMIDILooper
 {
 
@@ -34,8 +36,14 @@ public:
     CLogger();
     ~CLogger();
 
+    void Init();
+    void LogInfo( const char* str, ... ) const;
+    void LogWarning( const char* str, ... ) const;
+    void LogError( const char* str, ... ) const;
+
 private:
 
+    void Log( const char* header,  const char* str, va_list args ) const;
 
 };
 

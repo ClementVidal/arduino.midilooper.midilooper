@@ -20,27 +20,20 @@ along with ArduinoMIDILooper.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-#include <Arduino.h>
-
 #include <Application/Application.h>
 
 using namespace NArduinoMIDILooper;
 
 int main( void )
 {
-    init();
-    Serial.begin( 9600 );
+    CApplication application;
 
-    pinMode( 13, OUTPUT );
+    application.Init();
 
     while(1) 
     {
-        Serial.println("Hello world Bastard !!!!");
-        digitalWrite( 13, HIGH );
-        delay(1000);
-
-        digitalWrite( 13, LOW);
-        delay(1000);
+        application.Update();
     }
+
     return 0;
 }
