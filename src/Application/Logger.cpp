@@ -21,6 +21,7 @@ along with ArduinoMIDILooper.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include <Application/Logger.h>
+#include <Setup.h>
 
 #include <Arduino.h>
 
@@ -40,7 +41,9 @@ CLogger::~CLogger()
 
 void CLogger::Init()
 {
+#if LOG_OVER_SERIAL
     Serial.begin( 9600 );
+#endif
 }
 
 void CLogger::Log( const char* header,  const char* str, va_list args ) const
@@ -49,8 +52,10 @@ void CLogger::Log( const char* header,  const char* str, va_list args ) const
 
     vsnprintf( buffer, LOGGER_TMP_BUFFER_SIZE, str, args );
 
+#if LOG_OVER_SERIAL
     Serial.print( "Info: " );
     Serial.println( buffer );
+#endif
 }
 
 void CLogger::LogInfo( const char* str, ... ) const

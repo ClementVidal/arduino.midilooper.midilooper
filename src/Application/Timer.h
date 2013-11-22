@@ -20,8 +20,8 @@ along with ArduinoMIDILooper.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-#ifndef __APPLICATION_INPUTREADER__
-#define __APPLICATION_INPUTREADER__
+#ifndef __APPLICATION_TIMER__
+#define __APPLICATION_TIMER__
 
 namespace NArduinoMIDILooper
 {
@@ -33,6 +33,8 @@ public:
 
     CTimer();
     ~CTimer();
+
+    void Init();
 
 private:
 

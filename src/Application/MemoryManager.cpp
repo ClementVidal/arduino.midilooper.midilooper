@@ -33,3 +33,8 @@ CMemoryManager::~CMemoryManager()
 {
 
 }
+
+void CMemoryManager::Init()
+{
+
+}

@@ -23,6 +23,13 @@ along with ArduinoMIDILooper.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef __APPLICATION_APPLICATION__
 #define __APPLICATION_APPLICATION__
 
+#include <Application/MemoryManager.h>
+#include <Application/ListenerServer.h>
+#include <Application/PlayerServer.h>
+#include <Application/InputReader.h>
+#include <Application/Timer.h>
+#include <Application/Logger.h>
+
 namespace NArduinoMIDILooper
 {
 
@@ -39,6 +46,12 @@ public:
 
 private:
 
+    CMemoryManager  m_MemoryManager;
+    CLogger         m_Logger;
+    CTimer          m_Timer;
+    CInputReader    m_InputReader;
+    CPlayerServer   m_PlayerServer;
+    CListenerServer m_ListenerServer;
 
 };
 

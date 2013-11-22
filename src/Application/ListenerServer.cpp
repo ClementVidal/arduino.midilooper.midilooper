@@ -33,3 +33,8 @@ CListenerServer::~CListenerServer()
 {
 
 }
+
+void CListenerServer::Init()
+{
+
+}

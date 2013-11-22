@@ -33,3 +33,8 @@ CPlayerServer::~CPlayerServer()
 {
 
 }
+
+void CPlayerServer::Init()
+{
+
+}

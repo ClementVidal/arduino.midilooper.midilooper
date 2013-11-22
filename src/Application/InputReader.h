@@ -34,6 +34,8 @@ public:
     CInputReader();
     ~CInputReader();
 
+    void Init();
+
 private:
 
 

@@ -33,3 +33,8 @@ CInputReader::~CInputReader()
 {
 
 }
+
+void CInputReader::Init()
+{
+
+}

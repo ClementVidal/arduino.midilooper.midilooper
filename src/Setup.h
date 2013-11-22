@@ -20,27 +20,12 @@ along with ArduinoMIDILooper.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-#ifndef __APPLICATION_PLAYERSERVER__
-#define __APPLICATION_PLAYERSERVER__
-
-namespace NArduinoMIDILooper
-{
-
-class CPlayerServer
-{
-
-public:
-
-    CPlayerServer();
-    ~CPlayerServer();
-
-    void Init();
-
-private:
+#ifndef __SETUP__
+#define __SETUP__
 
 
-};
+#define LOG_OVER_SERIAL 1
 
-}
+
 
 #endif

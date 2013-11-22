@@ -45,10 +45,17 @@ add_custom_target( transfert COMMAND sudo avrdude -F -V -c arduino -p ATMEGA328P
 # Target to setup serial communication over /dev/ttyACM0
 add_custom_target( setupserial COMMAND stty -F /dev/ttyACM0 cs8 9600 ignbrk -brkint -imaxbel -opost -onlcr -isig -icanon -iexten -echo -echoe -echok -echoctl -echoke noflsh -ixon -crtscts )
 
+# Link order has defined here is not randomly chossen:
+# libm.a must be linked at the end to avoid duplaicated symbol
+# libc.a msut be included twice otherwise i get the relocation truncated to fit: R_AVR_13_PCREL against symbol `__ctype_isfalse' error 
+# This order was found by testing and trying, this is not a good solution but it works ... for now
+target_link_libraries( ArduinoMIDILooper c) 
 target_link_libraries( ArduinoMIDILooper ArduinoCore) 
 target_link_libraries( ArduinoMIDILooper c) 
 target_link_libraries( ArduinoMIDILooper gcc) 
 target_link_libraries( ArduinoMIDILooper m) 
+
+
 
 
 

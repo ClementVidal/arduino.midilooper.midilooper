@@ -37,6 +37,7 @@ public:
     ~CLogger();
 
     void Init();
+
     void LogInfo( const char* str, ... ) const;
     void LogWarning( const char* str, ... ) const;
     void LogError( const char* str, ... ) const;

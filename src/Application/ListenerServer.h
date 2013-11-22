@@ -34,6 +34,8 @@ public:
     CListenerServer();
     ~CListenerServer();
 
+    void Init();
+
 private:
 
 

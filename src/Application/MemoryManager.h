@@ -34,6 +34,8 @@ public:
     CMemoryManager();
     ~CMemoryManager();
 
+    void Init();
+
 private:
 
 
