@@ -33,3 +33,25 @@ CTimer::~CTimer()
 {
 
 }
+
+void CTimer::Start()
+{
+}
+
+void CTimer::Stop()
+{
+}
+
+void CTimer::Tag()
+{
+}
+
+Time CTimer::GetElapsedTimeSinceLastTag( bool tagAfter ) const
+{
+    return 0;
+}
+
+Time CTimer::GetElapsedTimeSinceStart() const
+{
+    return 0;
+}

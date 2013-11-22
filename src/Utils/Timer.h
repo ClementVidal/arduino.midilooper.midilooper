@@ -23,6 +23,8 @@ along with ArduinoMIDILooper.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef __UTILS_TIMER__
 #define __UTILS_TIMER__
 
+#include <DataType.h>
+
 namespace NArduinoMIDILooper
 {
 
@@ -34,6 +36,12 @@ public:
     CTimer();
     ~CTimer();
 
+    void Start();
+    void Stop();
+
+    void Tag();
+    Time GetElapsedTimeSinceLastTag( bool tagAfter ) const;
+    Time GetElapsedTimeSinceStart() const;
 
 private:
 

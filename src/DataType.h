@@ -24,6 +24,7 @@ along with ArduinoMIDILooper.  If not, see <http://www.gnu.org/licenses/>.
 #define __DATATYPES__
 
 
+typedef unsigned long Time;
 
 
 
