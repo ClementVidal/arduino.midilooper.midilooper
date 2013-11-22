@@ -35,25 +35,44 @@ CSession::CSession() :
 
 }
 
+CSession::~CSession()
+{
+}
+
 CSession::EStatus CSession::GetStatus() const
 {
     return m_Status;
 }
 
+void CSession::Reset()
+{
+    m_Timer.Stop();
+}
+
 void CSession::StartRecord()
 {
+    Reset();
+    m_Timer.Start();
+    m_Status = nStatus_Recording;
 }
 
 void CSession::StopRecord()
 {
+    if( m_Status == nStatus_Idle )
+        return;
 }
 
 void CSession::StartPlayback()
 {
+    Reset();
+    m_Timer.Start();
+    m_Status = nStatus_Playing;
 }
 
 void CSession::StopPlayback()
 {
+    if( m_Status == nStatus_Idle )
+        return;
 }
 
 void CSession::SelectNextTrack()
@@ -74,8 +93,6 @@ void CSession::SelectTrack( int n )
         m_CurrentTrack = SESSION_TRACK_COUNT - 1;
     else
         m_CurrentTrack = n;
-
-
     
 }
 

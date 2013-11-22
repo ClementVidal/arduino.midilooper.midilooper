@@ -22,6 +22,8 @@ along with ArduinoMIDILooper.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <Application/PlayerServer.h>
 
+#include <MIDI.h>
+
 using namespace NArduinoMIDILooper;
 
 CPlayerServer::CPlayerServer()
@@ -37,4 +39,24 @@ CPlayerServer::~CPlayerServer()
 void CPlayerServer::Init()
 {
 
+}
+
+void CPlayerServer::PlayEvent( int channelID, CEvent::EType type, char d1, char d2, char d3 )
+{
+    if( type == CEvent::nType_NoteOn )
+    {
+        MIDI.sendNoteOn( d1, d2, channelID );
+    }
+    else if( type == CEvent::nType_NoteOff )
+    {
+        MIDI.sendNoteOff( d1, d2, channelID );
+    }
+    else if( type == CEvent::nType_PitchBend )
+    {
+        MIDI.sendPitchBend( d1, channelID );
+    }
+    else if( type == CEvent::nType_ChannelPressure )
+    {
+        MIDI.sendAfterTouch( d1, channelID );
+    }
 }

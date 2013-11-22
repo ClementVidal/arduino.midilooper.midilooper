@@ -48,6 +48,7 @@ void CLogger::Init()
 
 void CLogger::Log( const char* header,  const char* str, va_list args ) const
 {
+#if DEBUG
     char buffer[LOGGER_TMP_BUFFER_SIZE];
 
     vsnprintf( buffer, LOGGER_TMP_BUFFER_SIZE, str, args );
@@ -56,31 +57,38 @@ void CLogger::Log( const char* header,  const char* str, va_list args ) const
     Serial.print( "Info: " );
     Serial.println( buffer );
 #endif
+#endif
 }
 
 void CLogger::LogInfo( const char* str, ... ) const
 {
+#if DEBUG
     va_list args;
 
     va_start( args, str );
     Log( "Info: ", str, args );
     va_end( args ) ;
+#endif
 }
 
 void CLogger::LogWarning( const char* str, ... ) const
 {
+#if DEBUG
     va_list args;
 
     va_start( args, str );
     Log( "Warning: ", str, args );
     va_end( args ) ;
+#endif
 }
 
 void CLogger::LogError( const char* str, ... ) const
 {
+#if DEBUG
     va_list args;
 
     va_start( args, str );
     Log( "Error: ", str, args );
     va_end( args ) ;
+#endif
 }

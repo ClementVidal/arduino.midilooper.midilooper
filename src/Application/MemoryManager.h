@@ -40,9 +40,9 @@ public:
 
     void Init();
 
-    int  Reserve( int size );
-    bool Read( int address, char* data, int size );
-    bool Write( int address, char* data, int size );
+    void*  Reserve( int size );
+    bool Read( const void* address, void* data, int size );
+    bool Write( const void* address, const void* data, int size );
 
 private:
 

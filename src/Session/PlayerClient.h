@@ -41,7 +41,7 @@ public:
     void Init();
 
     void PlayEvent( int channelID, const CEvent& e );
-    void PlayEvent( int channelID, char type, char d1, char d2, char d3 );
+    void PlayEvent( int channelID, CEvent::EType type, char d1, char d2, char d3 );
 
 private:
 

@@ -64,6 +64,7 @@ public:
 private:
 
     void UpdatePlayback();
+    void Reset();
 
     CPlayerClient   m_PlayerClient;
     CListenerClient m_ListenerClient;

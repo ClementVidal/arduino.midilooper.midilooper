@@ -6,7 +6,7 @@ set(CMAKE_CXX_COMPILER avr-g++)
 cmake_minimum_required(VERSION 2.6)
 project(AruduinoMIDILooper)
 
-set(COPT "-g -Os")
+set(COPT "-Os -fshort-enums")
 set(CWARN "-Wall")
 set(CSECTION "-ffunction-sections -fdata-sections")
 set(CMCU "-mmcu=atmega328p")
@@ -60,6 +60,9 @@ add_custom_target( setupserial COMMAND stty -F /dev/ttyACM0 cs8 9600 ignbrk -brk
 # This order was found by testing and trying, this is not a good solution but it works ... for now
 target_link_libraries( ArduinoMIDILooper c) 
 target_link_libraries( ArduinoMIDILooper ArduinoCore) 
+target_link_libraries( ArduinoMIDILooper ArduinoSPIRAM) 
+target_link_libraries( ArduinoMIDILooper ArduinoSPI) 
+target_link_libraries( ArduinoMIDILooper ArduinoMIDI) 
 target_link_libraries( ArduinoMIDILooper c) 
 target_link_libraries( ArduinoMIDILooper gcc) 
 target_link_libraries( ArduinoMIDILooper m) 

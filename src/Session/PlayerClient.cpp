@@ -21,6 +21,7 @@ along with ArduinoMIDILooper.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include <Session/PlayerClient.h>
+#include <Application/PlayerServer.h>
 
 using namespace NArduinoMIDILooper;
 
@@ -39,9 +40,9 @@ void CPlayerClient::PlayEvent( int channelID, const CEvent& e )
     PlayEvent( channelID, e.Type, e.Data[0], e.Data[1], e.Data[2] );
 }
 
-void CPlayerClient::PlayEvent( int channelID, char type, char d1, char d2, char d3 )
+void CPlayerClient::PlayEvent( int channelID, CEvent::EType type, char d1, char d2, char d3 )
 {
-
+    PlayerServer.PlayEvent( channelID, type, d1, d2, d3 );
 }
 
 void CPlayerClient::Init()

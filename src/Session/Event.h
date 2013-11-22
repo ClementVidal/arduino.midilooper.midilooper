@@ -44,9 +44,9 @@ public:
         nType_Count
     };
 
-    int  DeltaTime;   
-    char Type;
-    char Data[3];
+    Time  DeltaTime;    // MUST be 4 byte long
+    EType Type;         // MUST be 1 byte long
+    char  Data[3];      // MUST be 3 byte long
     
 private:
 

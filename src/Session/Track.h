@@ -26,6 +26,8 @@ along with ArduinoMIDILooper.  If not, see <http://www.gnu.org/licenses/>.
 namespace NArduinoMIDILooper
 {
 
+class CEvent;
+
 class CTrack
 {
 
@@ -39,10 +41,15 @@ public:
 
     void Init();
 
+    void AddEvent( const CEvent& e );
+    void GetEvent( int index, CEvent& e );
+    void Clear();
+
 private:
 
-    int m_ChannelID;
-    int m_EventsStartAddress;
+    int     m_ChannelID;
+    int     m_EventCount;
+    CEvent* m_EventsStartAddress;
 };
 
 }

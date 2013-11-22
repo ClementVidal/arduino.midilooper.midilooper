@@ -40,11 +40,13 @@ public:
     void Stop();
 
     void Tag();
-    Time GetElapsedTimeSinceLastTag( bool tagAfter ) const;
-    Time GetElapsedTimeSinceStart() const;
+    Time GetElapsedTimeSinceLastTag( bool tagAfter = true );
+    Time GetElapsedTimeSinceStart();
 
 private:
 
+    Time m_StartTime;
+    Time m_TagTime;
 
 };
 

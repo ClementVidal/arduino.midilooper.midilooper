@@ -22,7 +22,18 @@ along with ArduinoMIDILooper.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <Application/ListenerServer.h>
 
+#include <MIDI.h>
+
 using namespace NArduinoMIDILooper;
+
+static void NoteOnCB(byte channel, byte note, byte velocity);
+static void NoteOffCB(byte channel, byte note, byte velocity);
+static void PitchBendCB(byte channel, int pitchBend);
+static void ChannelPressureCB(byte channel, byte pressure);
+static void ControlChangeCB(byte channel, byte number, byte value);
+static void StartCB();
+static void StopCB();
+static void ClockCB();
 
 CListenerServer::CListenerServer()
 {
@@ -36,5 +47,44 @@ CListenerServer::~CListenerServer()
 
 void CListenerServer::Init()
 {
+    MIDI.setHandleNoteOn( NoteOnCB );
+    MIDI.setHandleNoteOff( NoteOffCB );
+    MIDI.setHandlePitchBend( PitchBendCB );
+    MIDI.setHandleAfterTouchChannel( ChannelPressureCB );
+    MIDI.setHandleStart( StartCB );
+    MIDI.setHandleStop( StopCB );
+    MIDI.setHandleClock( ClockCB );
+    MIDI.setHandleControlChange( ControlChangeCB );
+}
 
+void NoteOnCB(byte channel, byte note, byte velocity)
+{
+}
+
+void NoteOffCB(byte channel, byte note, byte velocity)
+{
+}
+
+void PitchBendCB(byte channel, int pitchBend)
+{
+}
+
+void ChannelPressureCB(byte channel, byte pressure)
+{
+}
+
+void ControlChangeCB(byte channel, byte number, byte value)
+{
+}
+
+void StartCB()
+{
+}
+
+void StopCB()
+{
+}
+
+void ClockCB()
+{
 }

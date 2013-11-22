@@ -22,9 +22,13 @@ along with ArduinoMIDILooper.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <Utils/Timer.h>
 
+#include <Arduino.h>
+
 using namespace NArduinoMIDILooper;
 
-CTimer::CTimer()
+CTimer::CTimer() :
+    m_StartTime( 0 ),
+    m_TagTime( 0 )
 {
 
 }
@@ -36,6 +40,8 @@ CTimer::~CTimer()
 
 void CTimer::Start()
 {
+    m_StartTime = millis();
+    m_TagTime = m_StartTime;
 }
 
 void CTimer::Stop()
@@ -44,14 +50,27 @@ void CTimer::Stop()
 
 void CTimer::Tag()
 {
+    if( m_StartTime == 0 )
+        return;
+
+    m_TagTime = millis();
 }
 
-Time CTimer::GetElapsedTimeSinceLastTag( bool tagAfter ) const
+Time CTimer::GetElapsedTimeSinceLastTag( bool tagAfter )
 {
-    return 0;
+    Time t2 = millis();
+    Time t1 = m_TagTime;
+    
+    if( tagAfter )
+        m_TagTime = t2;
+
+    return t2-t1;
 }
 
-Time CTimer::GetElapsedTimeSinceStart() const
+Time CTimer::GetElapsedTimeSinceStart()
 {
-    return 0;
+    Time t2 = millis();
+    Time t1 = m_StartTime;
+    
+    return t2-t1;
 }

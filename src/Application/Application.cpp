@@ -45,9 +45,11 @@ void CApplication::Init()
     m_InputReader.Init();
     m_PlayerServer.Init();
     m_ListenerServer.Init();
+
+    m_Session.Init();
 }
 
 void CApplication::Update()
 {
-
+    m_Session.Update();
 }

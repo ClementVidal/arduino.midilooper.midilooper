@@ -30,7 +30,8 @@ using namespace NArduinoMIDILooper;
 CTrack::CTrack()
 {
     m_ChannelID = 0;
-    m_EventsStartAddress = -1;
+    m_EventsStartAddress = 0;
+    m_EventCount = 0;
 }
 
 CTrack::~CTrack()
@@ -50,5 +51,20 @@ void CTrack::SetChannelID( int channelID )
 
 void CTrack::Init()
 {
-    m_EventsStartAddress = MemoryManager.Reserve( sizeof( CEvent ) * TRACK_EVENT_COUNT );
+    m_EventsStartAddress = (CEvent*)MemoryManager.Reserve( sizeof( CEvent ) * TRACK_EVENT_COUNT );
+}
+
+void CTrack::GetEvent( int index, CEvent& e )
+{
+    MemoryManager.Read( & m_EventsStartAddress[index], &e, sizeof( CEvent ) );
+}
+
+void CTrack::AddEvent( const CEvent& e )
+{
+    MemoryManager.Write( & m_EventsStartAddress[m_EventCount], &e, sizeof( CEvent ) );
+}
+
+void CTrack::Clear()
+{
+    m_EventCount = 0;
 }

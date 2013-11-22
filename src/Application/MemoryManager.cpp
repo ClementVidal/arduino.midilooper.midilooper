@@ -22,6 +22,8 @@ along with ArduinoMIDILooper.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <Application/MemoryManager.h>
 
+#include <SpiRAM.h>
+
 using namespace NArduinoMIDILooper;
 
 CMemoryManager::CMemoryManager() :
@@ -40,18 +42,26 @@ void CMemoryManager::Init()
 
 }
 
-int CMemoryManager::Reserve( int size )
+void* CMemoryManager::Reserve( int size )
 {
+#if DEBUG
+    if( m_FreeMemory + size >= EXTERNAL_RAM_SIZE )
+        Logger.LogError("Not enough external Ram");
+#endif
+
     m_FreeMemory += size;
-    return m_FreeMemory - size;
+    
+    return (void*) (m_FreeMemory - size);
 }
 
-bool CMemoryManager::Read( int address, char* data, int size )
+bool CMemoryManager::Read( const void* address, void* data, int size )
 {
+    SpiRam.read_stream( (int) address, (char*)data, size );
     return true;
 }
 
-bool CMemoryManager::Write( int address, char* data, int size )
+bool CMemoryManager::Write( const void* address, const void* data, int size )
 {
+    SpiRam.write_stream( (int) address, (char*)data, size );
     return true;
 }

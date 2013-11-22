@@ -28,5 +28,7 @@ along with ArduinoMIDILooper.  If not, see <http://www.gnu.org/licenses/>.
 
 #define SESSION_TRACK_COUNT 4
 #define TRACK_EVENT_COUNT 1024
+#define EXTERNAL_RAM_SIZE 32768
+#define DEBUG 1
 
 #endif

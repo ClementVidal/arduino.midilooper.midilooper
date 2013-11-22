@@ -23,6 +23,7 @@ along with ArduinoMIDILooper.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef __APPLICATION_PLAYERSERVER__
 #define __APPLICATION_PLAYERSERVER__
 
+#include <Session/Event.h>
 #include <Utils/Singleton.h>
 
 #define PlayerServer (CPlayerServer::GetInstance())
@@ -39,6 +40,7 @@ public:
     ~CPlayerServer();
 
     void Init();
+    void PlayEvent( int channelID, CEvent::EType type, char d1, char d2, char d3 );
 
 private:
 
