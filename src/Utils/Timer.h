@@ -20,21 +20,26 @@ along with ArduinoMIDILooper.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-#include <Application/Timer.h>
+#ifndef __UTILS_TIMER__
+#define __UTILS_TIMER__
 
-using namespace NArduinoMIDILooper;
-
-CTimer::CTimer()
+namespace NArduinoMIDILooper
 {
+
+class CTimer
+{
+
+public:
+
+    CTimer();
+    ~CTimer();
+
+
+private:
+
+
+};
 
 }
 
-CTimer::~CTimer()
-{
-
-}
-
-void CTimer::Init()
-{
-
-}
+#endif

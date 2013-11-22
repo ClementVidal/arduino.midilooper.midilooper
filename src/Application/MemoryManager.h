@@ -23,7 +23,7 @@ along with ArduinoMIDILooper.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef __APPLICATION_MEMORYMANAGER__
 #define __APPLICATION_MEMORYMANAGER__
 
-#include <Application/Singleton.h>
+#include <Utils/Singleton.h>
 
 #define MemoryManager (CMemoryManager::GetInstance())
 

@@ -27,7 +27,6 @@ along with ArduinoMIDILooper.  If not, see <http://www.gnu.org/licenses/>.
 #include <Application/ListenerServer.h>
 #include <Application/PlayerServer.h>
 #include <Application/InputReader.h>
-#include <Application/Timer.h>
 #include <Application/Logger.h>
 
 namespace NArduinoMIDILooper
@@ -48,7 +47,6 @@ private:
 
     CMemoryManager       m_MemoryManager;
     CLogger              m_Logger;
-    CTimer               m_Timer;
     CInputReader         m_InputReader;
     CPlayerServer        m_PlayerServer;
     CListenerServer      m_ListenerServer;

@@ -23,7 +23,7 @@ along with ArduinoMIDILooper.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef __APPLICATION_PLAYERSERVER__
 #define __APPLICATION_PLAYERSERVER__
 
-#include <Application/Singleton.h>
+#include <Utils/Singleton.h>
 
 #define PlayerServer (CPlayerServer::GetInstance())
 

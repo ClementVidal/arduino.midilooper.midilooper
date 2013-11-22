@@ -23,7 +23,7 @@ along with ArduinoMIDILooper.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef __APPLICATION_LISTENERSERVER__
 #define __APPLICATION_LISTENERSERVER__
 
-#include <Application/Singleton.h>
+#include <Utils/Singleton.h>
 
 #define ListenerServer (CListenerServer::GetInstance())
 

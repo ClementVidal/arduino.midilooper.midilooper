@@ -23,7 +23,7 @@ along with ArduinoMIDILooper.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef __APPLICATION_INPUTREADER__
 #define __APPLICATION_INPUTREADER__
 
-#include <Application/Singleton.h>
+#include <Utils/Singleton.h>
 
 #define InputReader (CInputReader::GetInstance())
 

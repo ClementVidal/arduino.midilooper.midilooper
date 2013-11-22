@@ -28,12 +28,13 @@ link_directories($ENV{ARDUINO_LIB})
 add_executable( ArduinoMIDILooper 
   src/Main.cpp 
 
+  src/Utils/Timer.cpp
+
   src/Application/Application.cpp 
   src/Application/ListenerServer.cpp 
   src/Application/PlayerServer.cpp 
   src/Application/Logger.cpp
   src/Application/MemoryManager.cpp
-  src/Application/Timer.cpp
   src/Application/InputReader.cpp
 
   src/Session/Session.cpp

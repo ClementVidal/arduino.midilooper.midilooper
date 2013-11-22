@@ -25,7 +25,7 @@ along with ArduinoMIDILooper.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <stdio.h>
 
-#include <Application/Singleton.h>
+#include <Utils/Singleton.h>
 
 #define Logger (CLogger::GetInstance()) 
 

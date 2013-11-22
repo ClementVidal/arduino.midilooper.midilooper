@@ -42,7 +42,6 @@ void CApplication::Init()
 
     m_MemoryManager.Init();
     m_Logger.Init();
-    m_Timer.Init();
     m_InputReader.Init();
     m_PlayerServer.Init();
     m_ListenerServer.Init();

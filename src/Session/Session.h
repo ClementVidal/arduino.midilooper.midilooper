@@ -26,6 +26,7 @@ along with ArduinoMIDILooper.  If not, see <http://www.gnu.org/licenses/>.
 #include <Session/Track.h>
 #include <Session/PlayerClient.h>
 #include <Session/ListenerClient.h>
+#include <Utils/Timer.h>
 #include <Setup.h>
 
 namespace NArduinoMIDILooper
@@ -66,9 +67,10 @@ private:
 
     CPlayerClient   m_PlayerClient;
     CListenerClient m_ListenerClient;
-    CTrack     m_Tracks[SESSION_TRACK_COUNT];
-    int        m_CurrentTrack;
-    EStatus    m_Status;
+    CTrack          m_Tracks[SESSION_TRACK_COUNT];
+    int             m_CurrentTrack;
+    EStatus         m_Status;
+    CTimer          m_Timer;
 
     int        m_CurrentBar;
     int        m_BarCount;
