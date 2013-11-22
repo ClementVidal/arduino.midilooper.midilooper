@@ -28,7 +28,6 @@ using namespace NArduinoMIDILooper;
 
 CApplication::CApplication()
 {
-
 }
 
 CApplication::~CApplication()

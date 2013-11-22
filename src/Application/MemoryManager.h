@@ -23,10 +23,14 @@ along with ArduinoMIDILooper.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef __APPLICATION_MEMORYMANAGER__
 #define __APPLICATION_MEMORYMANAGER__
 
+#include <Application/Singleton.h>
+
+#define MemoryManager (CMemoryManager::GetInstance())
+
 namespace NArduinoMIDILooper
 {
 
-class CMemoryManager
+class CMemoryManager : public CSingleton<CMemoryManager>
 {
 
 public:
@@ -36,8 +40,13 @@ public:
 
     void Init();
 
+    int  Reserve( int size );
+    bool Read( int address, char* data, int size );
+    bool Write( int address, char* data, int size );
+
 private:
 
+    int m_FreeMemory;
 
 };
 

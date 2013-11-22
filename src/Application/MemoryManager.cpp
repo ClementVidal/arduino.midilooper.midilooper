@@ -24,9 +24,10 @@ along with ArduinoMIDILooper.  If not, see <http://www.gnu.org/licenses/>.
 
 using namespace NArduinoMIDILooper;
 
-CMemoryManager::CMemoryManager()
+CMemoryManager::CMemoryManager() :
+    m_FreeMemory( 0 )
 {
-
+    
 }
 
 CMemoryManager::~CMemoryManager()
@@ -37,4 +38,20 @@ CMemoryManager::~CMemoryManager()
 void CMemoryManager::Init()
 {
 
+}
+
+int CMemoryManager::Reserve( int size )
+{
+    m_FreeMemory += size;
+    return m_FreeMemory - size;
+}
+
+bool CMemoryManager::Read( int address, char* data, int size )
+{
+    return true;
+}
+
+bool CMemoryManager::Write( int address, char* data, int size )
+{
+    return true;
 }

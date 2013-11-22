@@ -26,6 +26,7 @@ along with ArduinoMIDILooper.  If not, see <http://www.gnu.org/licenses/>.
 
 #define LOG_OVER_SERIAL 1
 
-
+#define SESSION_TRACK_COUNT 4
+#define TRACK_EVENT_COUNT 1024
 
 #endif

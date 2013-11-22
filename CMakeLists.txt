@@ -27,6 +27,7 @@ link_directories($ENV{ARDUINO_LIB})
 
 add_executable( ArduinoMIDILooper 
   src/Main.cpp 
+
   src/Application/Application.cpp 
   src/Application/ListenerServer.cpp 
   src/Application/PlayerServer.cpp 
@@ -34,6 +35,13 @@ add_executable( ArduinoMIDILooper
   src/Application/MemoryManager.cpp
   src/Application/Timer.cpp
   src/Application/InputReader.cpp
+
+  src/Session/Session.cpp
+  src/Session/Track.cpp
+  src/Session/Event.cpp
+  src/Session/ListenerClient.cpp
+  src/Session/PlayerClient.cpp
+
   )
 
 # Custom POST_BUILD target to call avr-objcopy over the generated elf file

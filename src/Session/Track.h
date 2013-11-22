@@ -23,8 +23,28 @@ along with ArduinoMIDILooper.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef __SESSION_TRACK__
 #define __SESSION_TRACK__
 
+namespace NArduinoMIDILooper
+{
 
+class CTrack
+{
 
+public:
 
+    CTrack();
+    ~CTrack();
+
+    int  GetChannelID() const;
+    void SetChannelID( int channelID );
+
+    void Init();
+
+private:
+
+    int m_ChannelID;
+    int m_EventsStartAddress;
+};
+
+}
 
 #endif

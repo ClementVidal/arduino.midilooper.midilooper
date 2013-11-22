@@ -25,10 +25,14 @@ along with ArduinoMIDILooper.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <stdio.h>
 
+#include <Application/Singleton.h>
+
+#define Logger (CLogger::GetInstance()) 
+
 namespace NArduinoMIDILooper
 {
 
-class CLogger
+class CLogger : public CSingleton<CLogger>
 {
 
 public:

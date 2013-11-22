@@ -23,8 +23,21 @@ along with ArduinoMIDILooper.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef __SESSION_LISTENERCLIENT__
 #define __SESSION_LISTENERCLIENT__
 
+namespace NArduinoMIDILooper
+{
 
+class CListenerClient
+{
 
+public:
 
+    CListenerClient();
+    ~CListenerClient();
+
+    void Init();
+
+};
+
+}
 
 #endif

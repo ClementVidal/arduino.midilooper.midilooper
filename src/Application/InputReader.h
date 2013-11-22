@@ -23,10 +23,14 @@ along with ArduinoMIDILooper.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef __APPLICATION_INPUTREADER__
 #define __APPLICATION_INPUTREADER__
 
+#include <Application/Singleton.h>
+
+#define InputReader (CInputReader::GetInstance())
+
 namespace NArduinoMIDILooper
 {
 
-class CInputReader
+class CInputReader : public CSingleton<CInputReader>
 {
 
 public:

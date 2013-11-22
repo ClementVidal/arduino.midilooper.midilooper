@@ -23,8 +23,35 @@ along with ArduinoMIDILooper.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef __SESSION_EVENT__
 #define __SESSION_EVENT__
 
+#include <DataType.h>
 
+namespace NArduinoMIDILooper
+{
 
+class CEvent
+{
 
+public:
+
+    CEvent();
+
+    enum EType
+    {
+        nType_NoteOn = 0,
+        nType_NoteOff,
+        nType_PitchBend,
+        nType_ChannelPressure,
+        nType_Count
+    };
+
+    int  DeltaTime;   
+    char Type;
+    char Data[3];
+    
+private:
+
+};
+
+}
 
 #endif

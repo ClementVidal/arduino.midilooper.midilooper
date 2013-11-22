@@ -23,10 +23,14 @@ along with ArduinoMIDILooper.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef __APPLICATION_LISTENERSERVER__
 #define __APPLICATION_LISTENERSERVER__
 
+#include <Application/Singleton.h>
+
+#define ListenerServer (CListenerServer::GetInstance())
+
 namespace NArduinoMIDILooper
 {
 
-class CListenerServer
+class CListenerServer : public CSingleton<CListenerServer>
 {
 
 public:

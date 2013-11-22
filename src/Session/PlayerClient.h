@@ -23,8 +23,30 @@ along with ArduinoMIDILooper.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef __SESSION_PLAYERCLIENT__
 #define __SESSION_PLAYERCLIENT__
 
+#include <Session/PlayerClient.h>
+#include <Session/Event.h>
+#include <Setup.h>
 
+namespace NArduinoMIDILooper
+{
 
+class CPlayerClient
+{
 
+public:
+
+    CPlayerClient();
+    ~CPlayerClient();
+
+    void Init();
+
+    void PlayEvent( int channelID, const CEvent& e );
+    void PlayEvent( int channelID, char type, char d1, char d2, char d3 );
+
+private:
+
+};
+
+}
 
 #endif

@@ -46,12 +46,12 @@ public:
 
 private:
 
-    CMemoryManager  m_MemoryManager;
-    CLogger         m_Logger;
-    CTimer          m_Timer;
-    CInputReader    m_InputReader;
-    CPlayerServer   m_PlayerServer;
-    CListenerServer m_ListenerServer;
+    CMemoryManager       m_MemoryManager;
+    CLogger              m_Logger;
+    CTimer               m_Timer;
+    CInputReader         m_InputReader;
+    CPlayerServer        m_PlayerServer;
+    CListenerServer      m_ListenerServer;
 
 };
 

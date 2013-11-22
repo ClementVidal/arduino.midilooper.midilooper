@@ -20,11 +20,37 @@ along with ArduinoMIDILooper.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-#include <Session/Event.h>
+#ifndef __APPLICATION_SINGLETON__
+#define __APPLICATION_SINGLETON__
 
-using namespace NArduinoMIDILooper;
-
-CEvent::CEvent()
+namespace NArduinoMIDILooper
 {
 
+template< typename T> 
+class CSingleton
+{
+
+public:
+
+    CSingleton()
+    {
+        m_Instance = (T*)this;
+    }
+
+    static T& GetInstance()
+    {
+        return *m_Instance;
+    }
+
+private:
+
+    static T* m_Instance;
+
+};
+
+template <typename T>
+T* CSingleton<T>::m_Instance = 0;
+
 }
+
+#endif

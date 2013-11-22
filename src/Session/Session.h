@@ -23,8 +23,60 @@ along with ArduinoMIDILooper.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef __SESSION_SESSION__
 #define __SESSION_SESSION__
 
+#include <Session/Track.h>
+#include <Session/PlayerClient.h>
+#include <Session/ListenerClient.h>
+#include <Setup.h>
 
+namespace NArduinoMIDILooper
+{
 
+class CSession
+{
 
+public:
+
+    enum EStatus
+    {
+        nStatus_Recording = 0,
+        nStatus_Playing,
+        nStatus_Idle,
+        nStatus_Count
+    };
+
+    CSession();
+    ~CSession();
+
+    EStatus GetStatus() const;
+
+    void StartRecord();
+    void StopRecord();
+    void StartPlayback();
+    void StopPlayback();
+    void SelectNextTrack();
+    void SelectPreviousTrack();
+    void SelectTrack( int n );
+
+    void Init();
+    void Update();
+
+private:
+
+    void UpdatePlayback();
+
+    CPlayerClient   m_PlayerClient;
+    CListenerClient m_ListenerClient;
+    CTrack     m_Tracks[SESSION_TRACK_COUNT];
+    int        m_CurrentTrack;
+    EStatus    m_Status;
+
+    int        m_CurrentBar;
+    int        m_BarCount;
+    int        m_CurrentQuarterNote;
+    int        m_QuarterNoteCount;
+
+};
+
+}
 
 #endif
