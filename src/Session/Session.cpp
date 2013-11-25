@@ -29,10 +29,9 @@ CSession::CSession() :
     m_CurrentTrack( 0 ),
     m_Status( CSession::nStatus_Idle ),
     m_NextEventIndex( -1 ),
-    m_CurrentBar( -1 ),
-    m_BarCount( -1 ),
     m_CurrentQuarterNote( -1 ),
-    m_QuarterNoteCount( -1 )
+    m_QuarterNoteCount( 0 ),
+    m_ClockCount( 0 )
 {
 
 }
@@ -48,16 +47,37 @@ CSession::EStatus CSession::GetStatus() const
 
 void CSession::OnEvent( const CEvent& e )
 {
+    if( m_Status == nStatus_Idle )
+        return;
+
+    if( m_Status == nStatus_Recording )
+    {
+        CTrack* currentTrack = &m_Tracks[m_CurrentTrack];
+        currentTrack->AddEvent( e );
+    }
+
+    PlayEvent( e );
 }
 
-void CSession::PlayEvent( int channelID, const CEvent& e )
+void CSession::OnClock( )
 {
-    PlayEvent( channelID, e.Type, e.Data[0], e.Data[1], e.Data[2] );
+    m_ClockCount++;
+    if( m_ClockCount == CLOCK_PER_QUARTER_NOTE ) 
+    {
+        m_QuarterNoteCount++;
+        m_ClockCount = 0;
+    }
 }
 
-void CSession::PlayEvent( int channelID, CEvent::EType type, char d1, char d2, char d3 )
+void CSession::PlayEvent( const CEvent& e )
 {
-    MIDIPlayer.PlayEvent( channelID, type, d1, d2, d3 );
+    PlayEvent( e.Type, e.Data[0], e.Data[1], e.Data[2] );
+}
+
+void CSession::PlayEvent( CEvent::EType type, char d1, char d2, char d3 )
+{
+    CTrack* currentTrack = &m_Tracks[m_CurrentTrack];
+    MIDIPlayer.PlayEvent( currentTrack->GetChannelID(), type, d1, d2, d3 );
 }
 
 void CSession::Reset()
@@ -65,10 +85,9 @@ void CSession::Reset()
     m_Timer.Stop();
     m_Status = CSession::nStatus_Idle;
     m_NextEventIndex = -1 ;
-    m_CurrentBar = -1;
-    m_BarCount = -1;
     m_CurrentQuarterNote = -1;
-    m_QuarterNoteCount = -1 ;
+    m_QuarterNoteCount = 0 ;
+    m_ClockCount = 0;
 }
 
 void CSession::StartRecord()
@@ -83,9 +102,9 @@ void CSession::Stop()
     if( m_Status == nStatus_Idle )
         return;
 
-    int tmpBarCount = m_BarCount;
+    int tmpQNCount = m_QuarterNoteCount;
     Reset();
-    m_BarCount = tmpBarCount;
+    m_QuarterNoteCount = tmpQNCount;
 }
 
 void CSession::StartPlayback()
@@ -99,9 +118,9 @@ void CSession::StartPlayback()
         return;
     }
 
-    int tmpBarCount = m_BarCount;
+    int tmpQNCount = m_QuarterNoteCount;
     Reset();
-    m_BarCount = tmpBarCount;    
+    m_QuarterNoteCount = tmpQNCount;    
 
     m_Status = nStatus_Playing;
     m_Timer.Start();
@@ -122,13 +141,20 @@ void CSession::SelectPreviousTrack()
 
 void CSession::SelectTrack( int n )
 {
+    int nt = 0;
+
     if( n < 0 )
-        m_CurrentTrack = 0;
+        nt = 0;
     else if( n >= SESSION_TRACK_COUNT )
-        m_CurrentTrack = SESSION_TRACK_COUNT - 1;
+        nt = SESSION_TRACK_COUNT - 1;
     else
-        m_CurrentTrack = n;
+        nt = n;
     
+    if( m_CurrentTrack != nt )
+    {
+        Reset();
+        m_CurrentTrack = nt;
+    }
 }
 
 void CSession::UpdatePlayback()
@@ -138,7 +164,7 @@ void CSession::UpdatePlayback()
 
     if( t >= m_NextEvent.DeltaTime )
     {
-        PlayEvent( currentTrack->GetChannelID(), m_NextEvent );
+        PlayEvent( m_NextEvent );
         m_Timer.Tag();
         
         m_NextEventIndex++;

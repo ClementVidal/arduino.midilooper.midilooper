@@ -113,4 +113,5 @@ void StopCB()
 
 void ClockCB()
 {
+    Session.OnClock( );
 }

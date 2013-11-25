@@ -63,13 +63,14 @@ public:
     void Update();
 
     void OnEvent( const CEvent& e );
+    void OnClock();
 
 private:
 
     void UpdatePlayback();
     void Reset();
-    void PlayEvent( int channelID, const CEvent& e );
-    void PlayEvent( int channelID, CEvent::EType type, char d1, char d2, char d3 );
+    void PlayEvent( const CEvent& e );
+    void PlayEvent( CEvent::EType type, char d1, char d2, char d3 );
 
     CTrack          m_Tracks[SESSION_TRACK_COUNT];
     int             m_CurrentTrack;
@@ -79,11 +80,9 @@ private:
     CEvent          m_NextEvent;
     int             m_NextEventIndex;
 
-    int             m_CurrentBar;
-    int             m_BarCount;
     int             m_CurrentQuarterNote;
     int             m_QuarterNoteCount;
-
+    int             m_ClockCount;
 };
 
 }

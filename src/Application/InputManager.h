@@ -20,37 +20,31 @@ along with ArduinoMIDILooper.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-#include <Application/Application.h>
+#ifndef __APPLICATION_INPUTMANAGER__
+#define __APPLICATION_INPUTMANAGER__
 
-#include <Arduino.h>
+#include <Utils/Singleton.h>
 
-using namespace NArduinoMIDILooper;
+#define InputManager (CInputManager::GetInstance())
 
-CApplication::CApplication()
-{
-}
-
-CApplication::~CApplication()
+namespace NArduinoMIDILooper
 {
 
-}
-
-void CApplication::Init()
+class CInputManager : public CSingleton<CInputManager>
 {
-    // Initialize Arduino Wire library...
-    init();
 
-    m_MemoryManager.Init();
-    m_Logger.Init();
-    m_InputManager.Init();
-    m_OutputManager.Init();
-    m_MIDIPlayer.Init();
-    m_MIDIListener.Init();
+public:
 
-    m_Session.Init();
+    CInputManager();
+    ~CInputManager();
+
+    void Init();
+
+private:
+
+
+};
+
 }
 
-void CApplication::Update()
-{
-    m_Session.Update();
-}
+#endif

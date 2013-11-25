@@ -20,37 +20,22 @@ along with ArduinoMIDILooper.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-#include <Application/Application.h>
-
-#include <Arduino.h>
+#include <Application/OutputManager.h>
 
 using namespace NArduinoMIDILooper;
 
-CApplication::CApplication()
-{
-}
-
-CApplication::~CApplication()
+COutputManager::COutputManager() :
+    m_LiquidCrystal(12, 11, 5, 4, 3, 2)
 {
 
 }
 
-void CApplication::Init()
+COutputManager::~COutputManager()
 {
-    // Initialize Arduino Wire library...
-    init();
 
-    m_MemoryManager.Init();
-    m_Logger.Init();
-    m_InputManager.Init();
-    m_OutputManager.Init();
-    m_MIDIPlayer.Init();
-    m_MIDIListener.Init();
-
-    m_Session.Init();
 }
 
-void CApplication::Update()
+void COutputManager::Init()
 {
-    m_Session.Update();
+
 }

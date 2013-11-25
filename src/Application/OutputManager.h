@@ -20,28 +20,31 @@ along with ArduinoMIDILooper.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-#ifndef __APPLICATION_INPUTREADER__
-#define __APPLICATION_INPUTREADER__
+#ifndef __APPLICATION_OUTPUTMANAGER__
+#define __APPLICATION_OUTPUTMANAGER__
 
 #include <Utils/Singleton.h>
 
-#define InputReader (CInputReader::GetInstance())
+#include <LiquidCrystal.h>
+
+#define OutputManager (COutputManager::GetInstance())
 
 namespace NArduinoMIDILooper
 {
 
-class CInputReader : public CSingleton<CInputReader>
+class COutputManager : public CSingleton<COutputManager>
 {
 
 public:
 
-    CInputReader();
-    ~CInputReader();
+    COutputManager();
+    ~COutputManager();
 
     void Init();
 
 private:
 
+    LiquidCrystal m_LiquidCrystal;
 
 };
 

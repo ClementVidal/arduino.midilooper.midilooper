@@ -20,21 +20,21 @@ along with ArduinoMIDILooper.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-#include <Application/InputReader.h>
+#include <Application/InputManager.h>
 
 using namespace NArduinoMIDILooper;
 
-CInputReader::CInputReader()
+CInputManager::CInputManager()
 {
 
 }
 
-CInputReader::~CInputReader()
+CInputManager::~CInputManager()
 {
 
 }
 
-void CInputReader::Init()
+void CInputManager::Init()
 {
 
 }
