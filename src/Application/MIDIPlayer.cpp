@@ -20,28 +20,28 @@ along with ArduinoMIDILooper.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-#include <Application/PlayerServer.h>
+#include <Application/MIDIPlayer.h>
 
 #include <MIDI.h>
 
 using namespace NArduinoMIDILooper;
 
-CPlayerServer::CPlayerServer()
+CMIDIPlayer::CMIDIPlayer()
 {
 
 }
 
-CPlayerServer::~CPlayerServer()
+CMIDIPlayer::~CMIDIPlayer()
 {
 
 }
 
-void CPlayerServer::Init()
+void CMIDIPlayer::Init()
 {
 
 }
 
-void CPlayerServer::PlayEvent( int channelID, CEvent::EType type, char d1, char d2, char d3 )
+void CMIDIPlayer::PlayEvent( int channelID, CEvent::EType type, char d1, char d2, char d3 )
 {
     if( type == CEvent::nType_NoteOn )
     {

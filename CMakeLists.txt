@@ -31,8 +31,8 @@ add_executable( ArduinoMIDILooper
   src/Utils/Timer.cpp
 
   src/Application/Application.cpp 
-  src/Application/ListenerServer.cpp 
-  src/Application/PlayerServer.cpp 
+  src/Application/MIDIListener.cpp 
+  src/Application/MIDIPlayer.cpp 
   src/Application/Logger.cpp
   src/Application/MemoryManager.cpp
   src/Application/InputReader.cpp

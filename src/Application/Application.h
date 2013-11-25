@@ -24,8 +24,8 @@ along with ArduinoMIDILooper.  If not, see <http://www.gnu.org/licenses/>.
 #define __APPLICATION_APPLICATION__
 
 #include <Application/MemoryManager.h>
-#include <Application/ListenerServer.h>
-#include <Application/PlayerServer.h>
+#include <Application/MIDIListener.h>
+#include <Application/MIDIPlayer.h>
 #include <Application/InputReader.h>
 #include <Application/Logger.h>
 #include <Session/Session.h>
@@ -49,8 +49,8 @@ private:
     CMemoryManager       m_MemoryManager;
     CLogger              m_Logger;
     CInputReader         m_InputReader;
-    CPlayerServer        m_PlayerServer;
-    CListenerServer      m_ListenerServer;
+    CMIDIPlayer          m_MIDIPlayer;
+    CMIDIListener        m_MIDIListener;
 
     CSession             m_Session;
 };

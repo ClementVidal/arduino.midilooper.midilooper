@@ -43,8 +43,8 @@ void CApplication::Init()
     m_MemoryManager.Init();
     m_Logger.Init();
     m_InputReader.Init();
-    m_PlayerServer.Init();
-    m_ListenerServer.Init();
+    m_MIDIPlayer.Init();
+    m_MIDIListener.Init();
 
     m_Session.Init();
 }

@@ -20,7 +20,7 @@ along with ArduinoMIDILooper.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-#include <Application/ListenerServer.h>
+#include <Application/MIDIListener.h>
 #include <Session/Session.h>
 #include <Session/Event.h>
 
@@ -37,17 +37,17 @@ static void StartCB();
 static void StopCB();
 static void ClockCB();
 
-CListenerServer::CListenerServer()
+CMIDIListener::CMIDIListener()
 {
 
 }
 
-CListenerServer::~CListenerServer()
+CMIDIListener::~CMIDIListener()
 {
 
 }
 
-void CListenerServer::Init()
+void CMIDIListener::Init()
 {
     MIDI.setHandleNoteOn( NoteOnCB );
     MIDI.setHandleNoteOff( NoteOffCB );

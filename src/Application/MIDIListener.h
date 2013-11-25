@@ -20,27 +20,25 @@ along with ArduinoMIDILooper.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-#ifndef __APPLICATION_PLAYERSERVER__
-#define __APPLICATION_PLAYERSERVER__
+#ifndef __APPLICATION_MIDILISTENER__
+#define __APPLICATION_MIDILISTENER__
 
-#include <Session/Event.h>
 #include <Utils/Singleton.h>
 
-#define PlayerServer (CPlayerServer::GetInstance())
+#define MIDIListener (CMIDIListener::GetInstance())
 
 namespace NArduinoMIDILooper
 {
 
-class CPlayerServer : public  CSingleton<CPlayerServer>
+class CMIDIListener : public CSingleton<CMIDIListener>
 {
 
 public:
 
-    CPlayerServer();
-    ~CPlayerServer();
+    CMIDIListener();
+    ~CMIDIListener();
 
     void Init();
-    void PlayEvent( int channelID, CEvent::EType type, char d1, char d2, char d3 );
 
 private:
 
