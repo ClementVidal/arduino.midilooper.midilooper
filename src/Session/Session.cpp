@@ -21,6 +21,7 @@ along with ArduinoMIDILooper.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include <Session/Session.h>
+#include <Application/PlayerServer.h>
 
 using namespace NArduinoMIDILooper;
 
@@ -43,6 +44,20 @@ CSession::~CSession()
 CSession::EStatus CSession::GetStatus() const
 {
     return m_Status;
+}
+
+void CSession::OnEvent( const CEvent& e )
+{
+}
+
+void CSession::PlayEvent( int channelID, const CEvent& e )
+{
+    PlayEvent( channelID, e.Type, e.Data[0], e.Data[1], e.Data[2] );
+}
+
+void CSession::PlayEvent( int channelID, CEvent::EType type, char d1, char d2, char d3 )
+{
+    PlayerServer.PlayEvent( channelID, type, d1, d2, d3 );
 }
 
 void CSession::Reset()
@@ -123,7 +138,7 @@ void CSession::UpdatePlayback()
 
     if( t >= m_NextEvent.DeltaTime )
     {
-        m_PlayerClient.PlayEvent( currentTrack->GetChannelID(), m_NextEvent );
+        PlayEvent( currentTrack->GetChannelID(), m_NextEvent );
         m_Timer.Tag();
         
         m_NextEventIndex++;
@@ -139,9 +154,6 @@ void CSession::UpdatePlayback()
 
 void CSession::Init()
 {
-    m_PlayerClient.Init();
-    m_ListenerClient.Init();
-
     for( int i = 0; i<SESSION_TRACK_COUNT;i++ )
     {
         m_Tracks[i].Init();

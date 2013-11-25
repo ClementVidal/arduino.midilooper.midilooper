@@ -21,6 +21,8 @@ along with ArduinoMIDILooper.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include <Application/ListenerServer.h>
+#include <Session/Session.h>
+#include <Session/Event.h>
 
 #include <MIDI.h>
 
@@ -59,18 +61,42 @@ void CListenerServer::Init()
 
 void NoteOnCB(byte channel, byte note, byte velocity)
 {
+    CEvent e;
+    e.Type = CEvent::nType_NoteOn;
+    e.Data[0] = note;
+    e.Data[1] = velocity;
+    e.Data[2] = 0;
+    Session.OnEvent( e );
 }
 
 void NoteOffCB(byte channel, byte note, byte velocity)
 {
+    CEvent e;
+    e.Type = CEvent::nType_NoteOff;
+    e.Data[0] = note;
+    e.Data[1] = velocity;
+    e.Data[2] = 0;
+    Session.OnEvent( e );
 }
 
 void PitchBendCB(byte channel, int pitchBend)
 {
+    CEvent e;
+    e.Type = CEvent::nType_PitchBend;
+    e.Data[0] = 0;
+    e.Data[1] = 0;
+    e.Data[2] = 0;
+    Session.OnEvent( e );
 }
 
 void ChannelPressureCB(byte channel, byte pressure)
 {
+    CEvent e;
+    e.Type = CEvent::nType_ChannelPressure;
+    e.Data[0] = pressure;
+    e.Data[1] = 0;
+    e.Data[2] = 0;
+    Session.OnEvent( e );
 }
 
 void ControlChangeCB(byte channel, byte number, byte value)

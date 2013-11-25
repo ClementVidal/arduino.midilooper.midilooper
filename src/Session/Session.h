@@ -24,15 +24,17 @@ along with ArduinoMIDILooper.  If not, see <http://www.gnu.org/licenses/>.
 #define __SESSION_SESSION__
 
 #include <Session/Track.h>
-#include <Session/PlayerClient.h>
-#include <Session/ListenerClient.h>
+#include <Session/Event.h>
 #include <Utils/Timer.h>
+#include <Utils/Singleton.h>
 #include <Setup.h>
+
+#define Session (CSession::GetInstance())
 
 namespace NArduinoMIDILooper
 {
 
-class CSession
+class CSession : public CSingleton<CSession>
 {
 
 public:
@@ -60,13 +62,15 @@ public:
     void Init();
     void Update();
 
+    void OnEvent( const CEvent& e );
+
 private:
 
     void UpdatePlayback();
     void Reset();
+    void PlayEvent( int channelID, const CEvent& e );
+    void PlayEvent( int channelID, CEvent::EType type, char d1, char d2, char d3 );
 
-    CPlayerClient   m_PlayerClient;
-    CListenerClient m_ListenerClient;
     CTrack          m_Tracks[SESSION_TRACK_COUNT];
     int             m_CurrentTrack;
     EStatus         m_Status;

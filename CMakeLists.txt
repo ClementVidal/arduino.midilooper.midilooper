@@ -40,8 +40,6 @@ add_executable( ArduinoMIDILooper
   src/Session/Session.cpp
   src/Session/Track.cpp
   src/Session/Event.cpp
-  src/Session/ListenerClient.cpp
-  src/Session/PlayerClient.cpp
 
   )
 
