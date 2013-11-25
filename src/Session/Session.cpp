@@ -27,10 +27,11 @@ using namespace NArduinoMIDILooper;
 CSession::CSession() :
     m_CurrentTrack( 0 ),
     m_Status( CSession::nStatus_Idle ),
-    m_CurrentBar( 0 ),
-    m_BarCount( 0 ),
-    m_CurrentQuarterNote( 0 ),
-    m_QuarterNoteCount( 0 )
+    m_NextEventIndex( -1 ),
+    m_CurrentBar( -1 ),
+    m_BarCount( -1 ),
+    m_CurrentQuarterNote( -1 ),
+    m_QuarterNoteCount( -1 )
 {
 
 }
@@ -47,6 +48,12 @@ CSession::EStatus CSession::GetStatus() const
 void CSession::Reset()
 {
     m_Timer.Stop();
+    m_Status = CSession::nStatus_Idle;
+    m_NextEventIndex = -1 ;
+    m_CurrentBar = -1;
+    m_BarCount = -1;
+    m_CurrentQuarterNote = -1;
+    m_QuarterNoteCount = -1 ;
 }
 
 void CSession::StartRecord()
@@ -56,23 +63,36 @@ void CSession::StartRecord()
     m_Status = nStatus_Recording;
 }
 
-void CSession::StopRecord()
+void CSession::Stop()
 {
     if( m_Status == nStatus_Idle )
         return;
+
+    int tmpBarCount = m_BarCount;
+    Reset();
+    m_BarCount = tmpBarCount;
 }
 
 void CSession::StartPlayback()
 {
-    Reset();
-    m_Timer.Start();
-    m_Status = nStatus_Playing;
-}
-
-void CSession::StopPlayback()
-{
-    if( m_Status == nStatus_Idle )
+    if( m_Status == nStatus_Recording )
+    {
+        Stop();
+    }
+    else if( m_Status == nStatus_Playing )
+    {
         return;
+    }
+
+    int tmpBarCount = m_BarCount;
+    Reset();
+    m_BarCount = tmpBarCount;    
+
+    m_Status = nStatus_Playing;
+    m_Timer.Start();
+
+    m_NextEventIndex = 0;
+    m_Tracks[m_CurrentTrack].GetEvent( m_NextEventIndex, m_NextEvent );
 }
 
 void CSession::SelectNextTrack()
@@ -98,6 +118,23 @@ void CSession::SelectTrack( int n )
 
 void CSession::UpdatePlayback()
 {
+    Time t = m_Timer.GetElapsedTimeSinceLastTag();
+    CTrack* currentTrack = &m_Tracks[m_CurrentTrack];
+
+    if( t >= m_NextEvent.DeltaTime )
+    {
+        m_PlayerClient.PlayEvent( currentTrack->GetChannelID(), m_NextEvent );
+        m_Timer.Tag();
+        
+        m_NextEventIndex++;
+
+        if( m_NextEventIndex >= currentTrack->GetEventCount() )
+        {
+            m_NextEventIndex = 0;
+        }
+
+        currentTrack->GetEvent( m_NextEventIndex, m_NextEvent );
+    }
 }
 
 void CSession::Init()

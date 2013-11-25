@@ -40,7 +40,7 @@ public:
     void Stop();
 
     void Tag();
-    Time GetElapsedTimeSinceLastTag( bool tagAfter = true );
+    Time GetElapsedTimeSinceLastTag( bool tagAfter = false );
     Time GetElapsedTimeSinceStart();
 
 private:

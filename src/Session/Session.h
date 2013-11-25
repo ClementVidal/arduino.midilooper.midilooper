@@ -51,9 +51,8 @@ public:
     EStatus GetStatus() const;
 
     void StartRecord();
-    void StopRecord();
     void StartPlayback();
-    void StopPlayback();
+    void Stop();
     void SelectNextTrack();
     void SelectPreviousTrack();
     void SelectTrack( int n );
@@ -73,10 +72,13 @@ private:
     EStatus         m_Status;
     CTimer          m_Timer;
 
-    int        m_CurrentBar;
-    int        m_BarCount;
-    int        m_CurrentQuarterNote;
-    int        m_QuarterNoteCount;
+    CEvent          m_NextEvent;
+    int             m_NextEventIndex;
+
+    int             m_CurrentBar;
+    int             m_BarCount;
+    int             m_CurrentQuarterNote;
+    int             m_QuarterNoteCount;
 
 };
 

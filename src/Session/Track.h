@@ -43,6 +43,7 @@ public:
 
     void AddEvent( const CEvent& e );
     void GetEvent( int index, CEvent& e );
+    int  GetEventCount() const;
     void Clear();
 
 private:
