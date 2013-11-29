@@ -43,6 +43,7 @@ public:
     {
         nStatus_Recording = 0,
         nStatus_Playing,
+        nStatus_WaitingBeforePlaying,
         nStatus_Idle,
         nStatus_Count
     };
@@ -58,9 +59,10 @@ public:
     void SelectNextTrack();
     void SelectPreviousTrack();
     void SelectTrack( int n );
+    void SetTrackMIDIChannel( int track, int channel );
+    int  GetTrackMIDIChannel( int track );
 
     void Init();
-    void Update();
 
     void OnEvent( const CEvent& e );
     void OnClock();
@@ -68,9 +70,10 @@ public:
 private:
 
     void UpdatePlayback();
+    void UpdateQuarterNoteDuration();
     void Reset();
     void PlayEvent( const CEvent& e );
-    void PlayEvent( CEvent::EType type, char d1, char d2, char d3 );
+    void PlayEvent( CEvent::EType type, char d1, char d2 );
 
     CTrack          m_Tracks[SESSION_TRACK_COUNT];
     int             m_CurrentTrack;
@@ -80,9 +83,11 @@ private:
     CEvent          m_NextEvent;
     int             m_NextEventIndex;
 
-    int             m_CurrentQuarterNote;
-    int             m_QuarterNoteCount;
-    int             m_ClockCount;
+    Time            m_QuarterNoteDuration;
+    unsigned int    m_CurrentQuarterNote;
+    unsigned int    m_QuarterNoteCount;
+    ClockCount      m_ClockCount;
+    ClockCount      m_DeltaClockCount;
 };
 
 }

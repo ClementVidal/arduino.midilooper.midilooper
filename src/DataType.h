@@ -25,8 +25,15 @@ along with ArduinoMIDILooper.  If not, see <http://www.gnu.org/licenses/>.
 
 
 #define CLOCK_PER_QUARTER_NOTE (24)
+#define EEPROM_MAGIC_KEY (0xBB)
+
+#define CONFIG_DEFAULT_STARTCC 32
+#define CONFIG_DEFAULT_NEXT_TRACKCC 33
+#define CONFIG_DEFAULT_PREVIOUS_TRACKCC 34
+#define CONFIG_DEFAULT_INPUT_CHANNEL 0
 
 typedef unsigned long Time; // Time MUST be 4 bytes long
+typedef unsigned int ClockCount; // Time MUST be 2 bytes long
 
 
 

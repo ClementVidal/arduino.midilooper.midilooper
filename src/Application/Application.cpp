@@ -42,8 +42,8 @@ void CApplication::Init()
 
     m_MemoryManager.Init();
     m_Logger.Init();
-    m_InputManager.Init();
-    m_OutputManager.Init();
+    m_Config.Init();
+    m_UserInterface.Init();
     m_MIDIPlayer.Init();
     m_MIDIListener.Init();
 
@@ -52,5 +52,6 @@ void CApplication::Init()
 
 void CApplication::Update()
 {
-    m_Session.Update();
+    m_UserInterface.Update();
+    m_MIDIListener.Update();
 }

@@ -29,9 +29,11 @@ CSession::CSession() :
     m_CurrentTrack( 0 ),
     m_Status( CSession::nStatus_Idle ),
     m_NextEventIndex( -1 ),
+    m_QuarterNoteDuration( 0 ),
     m_CurrentQuarterNote( -1 ),
     m_QuarterNoteCount( 0 ),
-    m_ClockCount( 0 )
+    m_ClockCount( 0 ),
+    m_DeltaClockCount( 0 )
 {
 
 }
@@ -61,23 +63,36 @@ void CSession::OnEvent( const CEvent& e )
 
 void CSession::OnClock( )
 {
-    m_ClockCount++;
-    if( m_ClockCount == CLOCK_PER_QUARTER_NOTE ) 
+    if( m_Status == nStatus_Playing )
     {
-        m_QuarterNoteCount++;
-        m_ClockCount = 0;
+        if( m_ClockCount == 0 ) 
+        {
+            m_DeltaClockCount = 0;
+        }
+
+        UpdatePlayback();
+
+        m_DeltaClockCount++;
     }
+    // Real playback start begin after the first Clock received
+    else if( m_Status == nStatus_WaitingBeforePlaying )
+    {
+        m_Status = nStatus_Playing;
+        m_Timer.Start();
+    }
+
+    UpdateQuarterNoteDuration();
 }
 
 void CSession::PlayEvent( const CEvent& e )
 {
-    PlayEvent( e.Type, e.Data[0], e.Data[1], e.Data[2] );
+    PlayEvent( e.Type, e.ByteData[0], e.ByteData[1] );
 }
 
-void CSession::PlayEvent( CEvent::EType type, char d1, char d2, char d3 )
+void CSession::PlayEvent( CEvent::EType type, char d1, char d2 )
 {
     CTrack* currentTrack = &m_Tracks[m_CurrentTrack];
-    MIDIPlayer.PlayEvent( currentTrack->GetChannelID(), type, d1, d2, d3 );
+    MIDIPlayer.PlayEvent( currentTrack->GetMIDIChannel(), type, d1, d2 );
 }
 
 void CSession::Reset()
@@ -88,6 +103,8 @@ void CSession::Reset()
     m_CurrentQuarterNote = -1;
     m_QuarterNoteCount = 0 ;
     m_ClockCount = 0;
+    m_DeltaClockCount = 0;
+    m_QuarterNoteDuration = 0;
 }
 
 void CSession::StartRecord()
@@ -100,7 +117,9 @@ void CSession::StartRecord()
 void CSession::Stop()
 {
     if( m_Status == nStatus_Idle )
+    {
         return;
+    }
 
     int tmpQNCount = m_QuarterNoteCount;
     Reset();
@@ -113,7 +132,7 @@ void CSession::StartPlayback()
     {
         Stop();
     }
-    else if( m_Status == nStatus_Playing )
+    else if( m_Status == nStatus_Playing || m_Status == nStatus_WaitingBeforePlaying )
     {
         return;
     }
@@ -122,8 +141,7 @@ void CSession::StartPlayback()
     Reset();
     m_QuarterNoteCount = tmpQNCount;    
 
-    m_Status = nStatus_Playing;
-    m_Timer.Start();
+    m_Status = nStatus_WaitingBeforePlaying;
 
     m_NextEventIndex = 0;
     m_Tracks[m_CurrentTrack].GetEvent( m_NextEventIndex, m_NextEvent );
@@ -144,11 +162,17 @@ void CSession::SelectTrack( int n )
     int nt = 0;
 
     if( n < 0 )
+    {
         nt = 0;
+    }
     else if( n >= SESSION_TRACK_COUNT )
+    {
         nt = SESSION_TRACK_COUNT - 1;
+    }
     else
+    {
         nt = n;
+    }
     
     if( m_CurrentTrack != nt )
     {
@@ -157,25 +181,64 @@ void CSession::SelectTrack( int n )
     }
 }
 
+void CSession::UpdateQuarterNoteDuration()
+{
+    static Time s_QNTime = 0;
+
+    if( m_ClockCount == 0 ) 
+    {
+        s_QNTime = m_Timer.GetElapsedTimeSinceStart();
+    }
+
+    if( m_ClockCount == CLOCK_PER_QUARTER_NOTE ) 
+    {
+        Time t = m_Timer.GetElapsedTimeSinceStart();
+        m_QuarterNoteDuration = t - s_QNTime;
+        s_QNTime = t;
+        m_QuarterNoteCount++;
+        m_ClockCount = 0;
+    }
+
+    m_ClockCount++;
+}
+
 void CSession::UpdatePlayback()
 {
-    Time t = m_Timer.GetElapsedTimeSinceLastTag();
     CTrack* currentTrack = &m_Tracks[m_CurrentTrack];
 
-    if( t >= m_NextEvent.DeltaTime )
-    {
-        PlayEvent( m_NextEvent );
-        m_Timer.Tag();
-        
-        m_NextEventIndex++;
+    int playedEventCount = 0;
+    int nextEventIndex = m_NextEventIndex;
 
-        if( m_NextEventIndex >= currentTrack->GetEventCount() )
+    while( m_DeltaClockCount >= m_NextEvent.DeltaClockCount  )
+    {
+        // Play event
+        PlayEvent( m_NextEvent );
+        playedEventCount++;
+
+        // Move to next event or loop if necessary
+        nextEventIndex++;
+        if( nextEventIndex >= currentTrack->GetEventCount() )
         {
-            m_NextEventIndex = 0;
+            nextEventIndex = 0;
         }
 
-        currentTrack->GetEvent( m_NextEventIndex, m_NextEvent );
+        // This mean that we are going to fetch an event that was already played
+        if( nextEventIndex == m_NextEventIndex )
+        {
+            break;
+        }
+
+        // Fetch next event
+        currentTrack->GetEvent( nextEventIndex, m_NextEvent );
     }
+
+    // Reset delta clock if at least one Event was played
+    if( playedEventCount != 0 )
+    {
+        m_DeltaClockCount = 0;
+        m_NextEventIndex = nextEventIndex;
+    }
+
 }
 
 void CSession::Init()
@@ -186,10 +249,20 @@ void CSession::Init()
     }
 }
 
-void CSession::Update()
+void CSession::SetTrackMIDIChannel( int track, int channel )
 {
-    if( m_Status == nStatus_Playing )
+    if( track >= 0 && track < SESSION_TRACK_COUNT )
     {
-        UpdatePlayback();
+        m_Tracks[track].SetMIDIChannel( channel );
     }
+}
+
+int CSession::GetTrackMIDIChannel( int track )
+{
+    if( track >= 0 && track < SESSION_TRACK_COUNT )
+    {
+        return m_Tracks[track].GetMIDIChannel( );
+    }
+
+    return -1;
 }

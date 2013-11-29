@@ -41,7 +41,7 @@ void CMIDIPlayer::Init()
 
 }
 
-void CMIDIPlayer::PlayEvent( int channelID, CEvent::EType type, char d1, char d2, char d3 )
+void CMIDIPlayer::PlayEvent( int channelID, CEvent::EType type, char d1, char d2 )
 {
     if( type == CEvent::nType_NoteOn )
     {

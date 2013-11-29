@@ -1,3 +1,4 @@
+
 /*
 
 Copyright 2013 Clement Vidal - clementvidalperso@gmail.com
@@ -20,34 +21,39 @@ along with ArduinoMIDILooper.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-#ifndef __APPLICATION_OUTPUTMANAGER__
-#define __APPLICATION_OUTPUTMANAGER__
+#include <Application/Config.h>
 
-#include <Utils/Singleton.h>
+#include <DataType.h>
 
-#include <LiquidCrystal.h>
+#include <EEPROM.h>
 
-#define OutputManager (COutputManager::GetInstance())
+using namespace NArduinoMIDILooper;
 
-namespace NArduinoMIDILooper
+CConfig::CConfig() :
+    StartRecordCC( CONFIG_DEFAULT_STARTCC ),
+    SelectNextTrackCC( CONFIG_DEFAULT_NEXT_TRACKCC ),
+    SelectPreviousTrackCC( CONFIG_DEFAULT_PREVIOUS_TRACKCC ),
+    MIDIInputChannel( CONFIG_DEFAULT_INPUT_CHANNEL )
 {
-
-class COutputManager : public CSingleton<COutputManager>
-{
-
-public:
-
-    COutputManager();
-    ~COutputManager();
-
-    void Init();
-
-private:
-
-    LiquidCrystal m_LiquidCrystal;
-
-};
 
 }
 
-#endif
+CConfig::~CConfig()
+{
+
+}
+
+void CConfig::Init()
+{
+    int value = 0;
+    value = EEPROM.read( 0 );
+
+    if( value != EEPROM_MAGIC_KEY )
+        return;
+
+    StartRecordCC = EEPROM.read( 1 );
+    SelectNextTrackCC = EEPROM.read( 2 );
+    SelectPreviousTrackCC = EEPROM.read( 3 );
+    MIDIInputChannel = EEPROM.read( 4 );
+
+}

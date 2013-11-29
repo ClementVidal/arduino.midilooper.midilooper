@@ -44,9 +44,14 @@ public:
         nType_Count
     };
 
-    Time  DeltaTime;    // MUST be 4 byte long
-    EType Type;         // MUST be 1 byte long
-    char  Data[3];      // MUST be 3 byte long
+    ClockCount   DeltaClockCount;    // 2 byte long
+    EType        Type;               // 1 byte long
+
+    union 
+    {
+        char         ByteData[2];    // 2 byte long
+        int          IntData;
+    };
     
 private:
 

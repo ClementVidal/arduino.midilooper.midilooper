@@ -20,21 +20,36 @@ along with ArduinoMIDILooper.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-#include <Application/InputManager.h>
+#ifndef __APPLICATION_CONFIG__
+#define __APPLICATION_CONFIG__
 
-using namespace NArduinoMIDILooper;
+#include <Utils/Singleton.h>
 
-CInputManager::CInputManager()
+#define Config (CConfig::GetInstance())
+
+namespace NArduinoMIDILooper
 {
+
+class CConfig : public CSingleton<CConfig>
+{
+
+public:
+
+    CConfig();
+    ~CConfig();
+
+    void Init();
+
+    unsigned char StartRecordCC;
+    unsigned char SelectNextTrackCC;
+    unsigned char SelectPreviousTrackCC;
+    unsigned char MIDIInputChannel;
+
+private:
+
+
+};
 
 }
 
-CInputManager::~CInputManager()
-{
-
-}
-
-void CInputManager::Init()
-{
-
-}
+#endif

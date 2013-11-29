@@ -39,6 +39,7 @@ public:
     ~CMIDIListener();
 
     void Init();
+    void Update();
 
 private:
 

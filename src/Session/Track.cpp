@@ -28,7 +28,7 @@ along with ArduinoMIDILooper.  If not, see <http://www.gnu.org/licenses/>.
 using namespace NArduinoMIDILooper;
 
 CTrack::CTrack() :
-    m_ChannelID( 0 ),
+    m_MIDIChannel( 0 ),
     m_EventCount( 0 ),
     m_EventsStartAddress( 0 )
 {
@@ -39,14 +39,14 @@ CTrack::~CTrack()
 
 }
 
-int CTrack::GetChannelID() const
+int CTrack::GetMIDIChannel() const
 {
-    return m_ChannelID;
+    return m_MIDIChannel;
 }
 
-void CTrack::SetChannelID( int channelID )
+void CTrack::SetMIDIChannel( int channelID )
 {
-    m_ChannelID = channelID;
+    m_MIDIChannel = channelID;
 }
 
 void CTrack::Init()

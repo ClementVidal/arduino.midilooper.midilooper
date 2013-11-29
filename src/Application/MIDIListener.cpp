@@ -21,6 +21,7 @@ along with ArduinoMIDILooper.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include <Application/MIDIListener.h>
+#include <Application/Config.h>
 #include <Session/Session.h>
 #include <Session/Event.h>
 
@@ -36,6 +37,7 @@ static void ControlChangeCB(byte channel, byte number, byte value);
 static void StartCB();
 static void StopCB();
 static void ClockCB();
+static ClockCount DeltaClockCount = 0;
 
 CMIDIListener::CMIDIListener()
 {
@@ -59,59 +61,92 @@ void CMIDIListener::Init()
     MIDI.setHandleControlChange( ControlChangeCB );
 }
 
+void CMIDIListener::Update()
+{
+    MIDI.read( Config.MIDIInputChannel );
+}
+
 void NoteOnCB(byte channel, byte note, byte velocity)
 {
     CEvent e;
     e.Type = CEvent::nType_NoteOn;
-    e.Data[0] = note;
-    e.Data[1] = velocity;
-    e.Data[2] = 0;
+    e.ByteData[0] = note;
+    e.ByteData[1] = velocity;
+    e.DeltaClockCount = DeltaClockCount;
+
     Session.OnEvent( e );
+
+    DeltaClockCount = 0;
 }
 
 void NoteOffCB(byte channel, byte note, byte velocity)
 {
     CEvent e;
     e.Type = CEvent::nType_NoteOff;
-    e.Data[0] = note;
-    e.Data[1] = velocity;
-    e.Data[2] = 0;
+    e.ByteData[0] = note;
+    e.ByteData[1] = velocity;
+    e.DeltaClockCount = DeltaClockCount;
+
     Session.OnEvent( e );
+
+    DeltaClockCount = 0;
 }
 
 void PitchBendCB(byte channel, int pitchBend)
 {
     CEvent e;
     e.Type = CEvent::nType_PitchBend;
-    e.Data[0] = 0;
-    e.Data[1] = 0;
-    e.Data[2] = 0;
+    e.IntData = 0;
+    e.DeltaClockCount = DeltaClockCount;
+
     Session.OnEvent( e );
+
+    DeltaClockCount = 0;
 }
 
 void ChannelPressureCB(byte channel, byte pressure)
 {
     CEvent e;
     e.Type = CEvent::nType_ChannelPressure;
-    e.Data[0] = pressure;
-    e.Data[1] = 0;
-    e.Data[2] = 0;
+    e.ByteData[0] = pressure;
+    e.ByteData[1] = 0;
+    e.DeltaClockCount = DeltaClockCount;
+
     Session.OnEvent( e );
+
+    DeltaClockCount = 0;
 }
 
 void ControlChangeCB(byte channel, byte number, byte value)
 {
+    if( number == Config.StartRecordCC )
+    {
+        Session.StartRecord();
+    }
+    else if( number == Config.SelectNextTrackCC )
+    {
+        Session.SelectNextTrack();
+    }
+    else if( number == Config.SelectPreviousTrackCC )
+    {
+        Session.SelectPreviousTrack();
+    }
 }
 
 void StartCB()
 {
+    DeltaClockCount = 0;
+    Session.StartPlayback();
 }
 
 void StopCB()
 {
+    DeltaClockCount = 0;
+    Session.Stop();
 }
 
 void ClockCB()
 {
     Session.OnClock( );
+    DeltaClockCount++;
 }

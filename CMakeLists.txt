@@ -34,9 +34,9 @@ add_executable( ArduinoMIDILooper
   src/Application/MIDIListener.cpp 
   src/Application/MIDIPlayer.cpp 
   src/Application/Logger.cpp
+  src/Application/Config.cpp
   src/Application/MemoryManager.cpp
-  src/Application/InputManager.cpp
-  src/Application/OutputManager.cpp
+  src/Application/UserInterface.cpp
 
   src/Session/Session.cpp
   src/Session/Track.cpp
@@ -63,6 +63,7 @@ target_link_libraries( ArduinoMIDILooper ArduinoSPIRAM)
 target_link_libraries( ArduinoMIDILooper ArduinoSPI) 
 target_link_libraries( ArduinoMIDILooper ArduinoMIDI) 
 target_link_libraries( ArduinoMIDILooper ArduinoLCD) 
+target_link_libraries( ArduinoMIDILooper ArduinoEEPROM) 
 target_link_libraries( ArduinoMIDILooper c) 
 target_link_libraries( ArduinoMIDILooper gcc) 
 target_link_libraries( ArduinoMIDILooper m) 

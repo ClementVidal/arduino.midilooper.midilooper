@@ -57,6 +57,7 @@ void CLogger::Log( const char* header,  const char* str, va_list args ) const
     Serial.print( "Info: " );
     Serial.println( buffer );
 #endif
+
 #endif
 }
 

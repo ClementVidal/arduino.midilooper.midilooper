@@ -40,7 +40,7 @@ public:
     ~CMIDIPlayer();
 
     void Init();
-    void PlayEvent( int channelID, CEvent::EType type, char d1, char d2, char d3 );
+    void PlayEvent( int channelID, CEvent::EType type, char d1, char d2 );
 
 private:
 

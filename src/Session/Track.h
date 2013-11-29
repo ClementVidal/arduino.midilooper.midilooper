@@ -36,8 +36,8 @@ public:
     CTrack();
     ~CTrack();
 
-    int  GetChannelID() const;
-    void SetChannelID( int channelID );
+    int  GetMIDIChannel() const;
+    void SetMIDIChannel( int channel );
 
     void Init();
 
@@ -48,7 +48,7 @@ public:
 
 private:
 
-    int     m_ChannelID;
+    int     m_MIDIChannel;
     int     m_EventCount;
     CEvent* m_EventsStartAddress;
 };
