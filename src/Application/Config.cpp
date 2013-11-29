@@ -30,7 +30,8 @@ along with ArduinoMIDILooper.  If not, see <http://www.gnu.org/licenses/>.
 using namespace NArduinoMIDILooper;
 
 CConfig::CConfig() :
-    StartRecordCC( CONFIG_DEFAULT_STARTCC ),
+    StartStopRecordCC( CONFIG_DEFAULT_STARTSTOPRECORDCC ),
+    StartStopPlaybackCC( CONFIG_DEFAULT_STARTSTOPPLAYBACKCC ),
     SelectNextTrackCC( CONFIG_DEFAULT_NEXT_TRACKCC ),
     SelectPreviousTrackCC( CONFIG_DEFAULT_PREVIOUS_TRACKCC ),
     MIDIInputChannel( CONFIG_DEFAULT_INPUT_CHANNEL )
@@ -51,9 +52,10 @@ void CConfig::Init()
     if( value != EEPROM_MAGIC_KEY )
         return;
 
-    StartRecordCC = EEPROM.read( 1 );
-    SelectNextTrackCC = EEPROM.read( 2 );
-    SelectPreviousTrackCC = EEPROM.read( 3 );
-    MIDIInputChannel = EEPROM.read( 4 );
+    StartStopRecordCC = EEPROM.read( 1 );
+    StartStopPlaybackCC = EEPROM.read( 2 );
+    SelectNextTrackCC = EEPROM.read( 3 );
+    SelectPreviousTrackCC = EEPROM.read( 4 );
+    MIDIInputChannel = EEPROM.read( 5 );
 
 }

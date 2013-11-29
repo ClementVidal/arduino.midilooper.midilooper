@@ -119,9 +119,29 @@ void ChannelPressureCB(byte channel, byte pressure)
 
 void ControlChangeCB(byte channel, byte number, byte value)
 {
-    if( number == Config.StartRecordCC )
+    if( number == Config.StartStopRecordCC )
     {
-        Session.StartRecord();
+        if( Session.GetStatus() == CSession::nStatus_Idle || 
+            Session.GetStatus() == CSession::nStatus_Playing )
+        {
+            Session.StartRecord();
+        }
+        else if( Session.GetStatus() == CSession::nStatus_Recording )
+        {
+            Session.Stop();
+        }
+    }
+    else if( number == Config.StartStopPlaybackCC )
+    {
+        if( Session.GetStatus() == CSession::nStatus_Idle || 
+            Session.GetStatus() == CSession::nStatus_Recording )
+        {
+            Session.StartPlayback();
+        }
+        else
+        {
+            Session.Stop();
+        }
     }
     else if( number == Config.SelectNextTrackCC )
     {

@@ -27,23 +27,24 @@ along with ArduinoMIDILooper.  If not, see <http://www.gnu.org/licenses/>.
 
 using namespace NArduinoMIDILooper;
 
-static CUserInterface::EMenu MenuNavigationMatrix[12][4] =
+static CUserInterface::EMenu MenuNavigationMatrix[13][4] =
 {
-//    |             Left                      |             Right                     |             Up                        |             Down     
-    {  CUserInterface::nMenu_None,             CUserInterface::nMenu_Settings,         CUserInterface::nMenu_None,             CUserInterface::nMenu_Set },               //nMenu_ActiveTrack
-    {  CUserInterface::nMenu_ActiveTrack,      CUserInterface::nMenu_TrackMIDIChannel, CUserInterface::nMenu_None,             CUserInterface::nMenu_StartRecordCC },     //nMenu_Settings
-    {  CUserInterface::nMenu_Settings,         CUserInterface::nMenu_Info,             CUserInterface::nMenu_None,             CUserInterface::nMenu_Track1MIDIChannel }, //nMenu_TrackMIDIChannel
-    {  CUserInterface::nMenu_TrackMIDIChannel, CUserInterface::nMenu_None,             CUserInterface::nMenu_None,             CUserInterface::nMenu_Set },               //nMenu_Info
+//    |             Left                        |             Right                       |             Up                        |             Down     
+    {  CUserInterface::nMenu_None,               CUserInterface::nMenu_Settings,           CUserInterface::nMenu_None,             CUserInterface::nMenu_Set },              //nMenu_ActiveTrack
+    {  CUserInterface::nMenu_ActiveTrack,        CUserInterface::nMenu_TrackMIDIChannel,   CUserInterface::nMenu_None,             CUserInterface::nMenu_StartStopRecordCC },//nMenu_Settings
+    {  CUserInterface::nMenu_Settings,           CUserInterface::nMenu_Info,               CUserInterface::nMenu_None,             CUserInterface::nMenu_Track1MIDIChannel },//nMenu_TrackMIDIChannel
+    {  CUserInterface::nMenu_TrackMIDIChannel,   CUserInterface::nMenu_None,               CUserInterface::nMenu_None,             CUserInterface::nMenu_Set },              //nMenu_Info
 
-    {  CUserInterface::nMenu_None,             CUserInterface::nMenu_NextTrackCC,      CUserInterface::nMenu_Settings,         CUserInterface::nMenu_Set },              //nMenu_StartRecordCC
-    {  CUserInterface::nMenu_StartRecordCC,    CUserInterface::nMenu_PreviousTrackCC,  CUserInterface::nMenu_Settings,         CUserInterface::nMenu_Set },              //nMenu_NextTrackCC
-    {  CUserInterface::nMenu_NextTrackCC,      CUserInterface::nMenu_MIDIInputChannel, CUserInterface::nMenu_Settings,         CUserInterface::nMenu_Set },              //nMenu_PreviousTrackCC
-    {  CUserInterface::nMenu_PreviousTrackCC,  CUserInterface::nMenu_None,             CUserInterface::nMenu_Settings,         CUserInterface::nMenu_Set },              //nMenu_StartRecordCC
+    {  CUserInterface::nMenu_None,               CUserInterface::nMenu_StartStopPlaybackCC,CUserInterface::nMenu_Settings,         CUserInterface::nMenu_Set },              //nMenu_StartStopRecordCC
+    {  CUserInterface::nMenu_StartStopRecordCC,  CUserInterface::nMenu_NextTrackCC,        CUserInterface::nMenu_Settings,         CUserInterface::nMenu_Set },              //nMenu_StartStopPlaybackCC
+    {  CUserInterface::nMenu_StartStopPlaybackCC,CUserInterface::nMenu_PreviousTrackCC,    CUserInterface::nMenu_Settings,         CUserInterface::nMenu_Set },              //nMenu_NextTrackCC
+    {  CUserInterface::nMenu_NextTrackCC,        CUserInterface::nMenu_MIDIInputChannel,   CUserInterface::nMenu_Settings,         CUserInterface::nMenu_Set },              //nMenu_PreviousTrackCC
+    {  CUserInterface::nMenu_PreviousTrackCC,    CUserInterface::nMenu_None,               CUserInterface::nMenu_Settings,         CUserInterface::nMenu_Set },              //nMenu_StartStopRecordCC
 
-    {  CUserInterface::nMenu_None,             CUserInterface::nMenu_Track2MIDIChannel,CUserInterface::nMenu_TrackMIDIChannel, CUserInterface::nMenu_Set },              //nMenu_Track1MIDIChannel
-    {  CUserInterface::nMenu_Track1MIDIChannel,CUserInterface::nMenu_Track3MIDIChannel,CUserInterface::nMenu_TrackMIDIChannel, CUserInterface::nMenu_Set },              //nMenu_Track2MIDIChannel
-    {  CUserInterface::nMenu_Track2MIDIChannel,CUserInterface::nMenu_Track4MIDIChannel,CUserInterface::nMenu_TrackMIDIChannel, CUserInterface::nMenu_Set },              //nMenu_Track3MIDIChannel
-    {  CUserInterface::nMenu_Track3MIDIChannel,CUserInterface::nMenu_None,             CUserInterface::nMenu_TrackMIDIChannel, CUserInterface::nMenu_Set },              //nMenu_Track4MIDIChannel
+    {  CUserInterface::nMenu_None,               CUserInterface::nMenu_Track2MIDIChannel,  CUserInterface::nMenu_TrackMIDIChannel, CUserInterface::nMenu_Set },              //nMenu_Track1MIDIChannel
+    {  CUserInterface::nMenu_Track1MIDIChannel,  CUserInterface::nMenu_Track3MIDIChannel,  CUserInterface::nMenu_TrackMIDIChannel, CUserInterface::nMenu_Set },              //nMenu_Track2MIDIChannel
+    {  CUserInterface::nMenu_Track2MIDIChannel,  CUserInterface::nMenu_Track4MIDIChannel,  CUserInterface::nMenu_TrackMIDIChannel, CUserInterface::nMenu_Set },              //nMenu_Track3MIDIChannel
+    {  CUserInterface::nMenu_Track3MIDIChannel,  CUserInterface::nMenu_None,               CUserInterface::nMenu_TrackMIDIChannel, CUserInterface::nMenu_Set },              //nMenu_Track4MIDIChannel
 
 };
 
@@ -102,7 +103,7 @@ void CUserInterface::EnterSetValueState()
         m_State = nState_SetMIDIChannel;
     }
     else if( m_CurrentMenu == nMenu_PreviousTrackCC || m_CurrentMenu == nMenu_NextTrackCC || 
-             m_CurrentMenu == nMenu_StartRecordCC )
+             m_CurrentMenu == nMenu_StartStopRecordCC || m_CurrentMenu == nMenu_StartStopPlaybackCC)
     {
         if( m_CurrentMenu == nMenu_PreviousTrackCC )
         {
@@ -112,9 +113,13 @@ void CUserInterface::EnterSetValueState()
         {
             m_SelectedValue = Config.SelectNextTrackCC;
         }
-        else if( m_CurrentMenu == nMenu_StartRecordCC )
+        else if( m_CurrentMenu == nMenu_StartStopRecordCC )
         {
-            m_SelectedValue = Config.StartRecordCC;
+            m_SelectedValue = Config.StartStopRecordCC;
+        }
+        else if( m_CurrentMenu == nMenu_StartStopPlaybackCC )
+        {
+            m_SelectedValue = Config.StartStopPlaybackCC;
         }
         m_State = nState_SetMIDICC;
     }
@@ -196,7 +201,7 @@ void CUserInterface::ValidateSelection()
         Session.SetTrackMIDIChannel( nMenu_Track1MIDIChannel - m_CurrentMenu, m_SelectedValue ); 
     }
     else if( m_CurrentMenu == nMenu_PreviousTrackCC || m_CurrentMenu == nMenu_NextTrackCC || 
-             m_CurrentMenu == nMenu_StartRecordCC )
+             m_CurrentMenu == nMenu_StartStopRecordCC || m_CurrentMenu == nMenu_StartStopPlaybackCC )
     {
         if( m_CurrentMenu == nMenu_PreviousTrackCC )
         {
@@ -206,9 +211,13 @@ void CUserInterface::ValidateSelection()
         {
             Config.SelectNextTrackCC = m_SelectedValue;
         }
-        else if( m_CurrentMenu == nMenu_StartRecordCC )
+        else if( m_CurrentMenu == nMenu_StartStopRecordCC )
         {
-            Config.StartRecordCC = m_SelectedValue;
+            Config.StartStopRecordCC = m_SelectedValue;
+        }
+        else if( m_CurrentMenu == nMenu_StartStopPlaybackCC )
+        {
+            Config.StartStopPlaybackCC = m_SelectedValue;
         }        
     }
     if( m_CurrentMenu == nMenu_MIDIInputChannel )

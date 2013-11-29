@@ -40,7 +40,8 @@ public:
 
     void Init();
 
-    unsigned char StartRecordCC;
+    unsigned char StartStopRecordCC;
+    unsigned char StartStopPlaybackCC;
     unsigned char SelectNextTrackCC;
     unsigned char SelectPreviousTrackCC;
     unsigned char MIDIInputChannel;

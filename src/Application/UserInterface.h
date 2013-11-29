@@ -50,7 +50,8 @@ public:
         nMenu_ActiveTrack = 1,
 
         nMenu_Settings,
-        nMenu_StartRecordCC,
+        nMenu_StartStopRecordCC,
+        nMenu_StartStopPlaybackCC,
         nMenu_NextTrackCC,
         nMenu_PreviousTrackCC,
         nMenu_MIDIInputChannel,

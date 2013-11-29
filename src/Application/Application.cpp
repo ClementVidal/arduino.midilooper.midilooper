@@ -21,8 +21,9 @@ along with ArduinoMIDILooper.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include <Application/Application.h>
-
 #include <Arduino.h>
+
+#include <MIDI.h>
 
 using namespace NArduinoMIDILooper;
 
@@ -39,6 +40,9 @@ void CApplication::Init()
 {
     // Initialize Arduino Wire library...
     init();
+
+    // Init MIDI library here 
+    MIDI.begin();
 
     m_MemoryManager.Init();
     m_Logger.Init();
