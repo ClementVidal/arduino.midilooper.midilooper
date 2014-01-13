@@ -11,3 +11,10 @@
 *.lai
 *.la
 *.a
+
+ArduinoMIDILooper
+ArduinoMIDILooper.hex
+CMakeCache.txt
+CMakeFiles/
+Makefile
+cmake_install.cmake

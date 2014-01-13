@@ -1,0 +1,16 @@
+ArduinoMIDILooper :
+
+I. Prerequisies:
+
+sudo apt-get install-avrdude
+
+
+II. Build:
+
+Build ArduinoLib
+
+
+III. Custom make target:
+
+make transfert :
+Upload the builded application onto the Arduino.
